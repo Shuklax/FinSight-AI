@@ -44,14 +44,16 @@ High-Level Architecture:
 Analyzes a financial document or URL.
 
 **Request:**
+```json
 {
-  "type": "pdf/url/text",
-  "input": "http://newslink.com/article123",
-  "query": "summarize risks and metrics"
+    "type": "pdf/url/text",
+    "input": "http://newslink.com/article123",
+    "query": "summarize risks and metrics"
 }
-
+```
 
 **Response:**
+```json
 {
   "summary": "...",
   "sentiment": "neutral",
@@ -63,3 +65,4 @@ Analyzes a financial document or URL.
     "guidance": "..."
   }
 }
+```
