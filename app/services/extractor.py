@@ -3,7 +3,7 @@ import io
 from typing import Optional
 from bs4 import BeautifulSoup
 import pdfplumber
-from pypdf2 import PdfReader
+from PyPDF2 import PdfReader
 
 class TextExtractor:
     """Extracts text from PDFs, URLs, or plain text"""
