@@ -51,7 +51,6 @@ logs/
 .pytest_cache/
 .coverage
 htmlcov/
-test_examples.json
 
 # Jupyter Notebooks
 .ipynb_checkpoints/

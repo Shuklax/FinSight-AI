@@ -1,0 +1,59 @@
+{
+    "examples": [
+      {
+        "name": "Test with financial news article",
+        "request": {
+          "type": "url",
+          "input": "https://www.cnbc.com/2024/01/25/microsoft-msft-earnings-q2-2024.html",
+          "query": "Extract key financial metrics and sentiment"
+        }
+      },
+      {
+        "name": "Test with plain text",
+        "request": {
+          "type": "text",
+          "input": "Tesla Inc. announced Q4 2024 results with total revenue of $25.2B, representing 3% growth year-over-year. Automotive revenue was $21.5B while Energy generation and storage revenue reached $2.4B, up 54% YoY. Net income came in at $7.9B with earnings per share of $2.27. The company delivered 484,507 vehicles in Q4. CEO Elon Musk warned about increased competition in the EV market and potential margin pressure. The company plans to launch a more affordable vehicle model in 2025. Operating expenses increased 15% due to AI and autonomous driving R&D investments.",
+          "query": "Analyze this earnings report and extract risks, opportunities, and key metrics"
+        }
+      },
+      {
+        "name": "Test with SEC filing (PDF)",
+        "request": {
+          "type": "pdf",
+          "input": "https://www.sec.gov/Archives/edgar/data/1318605/000156459021004599/tsla-10k_20201231.pdf",
+          "query": "What are the main risk factors mentioned?"
+        }
+      },
+      {
+        "name": "Short sentiment analysis",
+        "request": {
+          "type": "text",
+          "input": "Apple's iPhone sales declined 10% but services revenue grew 16%, offsetting hardware weakness. Gross margins compressed by 2 percentage points due to currency headwinds.",
+          "query": "What is the sentiment and key takeaway?"
+        }
+      }
+    ],
+    
+    "expected_response_structure": {
+      "summary": "Brief executive summary of the analysis",
+      "sentiment": "positive|negative|neutral|mixed",
+      "risk_factors": [
+        "Risk factor 1",
+        "Risk factor 2"
+      ],
+      "opportunities": [
+        "Opportunity 1", 
+        "Opportunity 2"
+      ],
+      "key_metrics": {
+        "revenue": "$94.9B",
+        "profit": "$23.5B",
+        "eps": "$1.52",
+        "guidance": "Expected growth of 5-7%",
+        "debt": "$120B",
+        "cash_flow": "$18B"
+      },
+      "confidence_score": 0.85,
+      "sources_used": 5
+    }
+  }

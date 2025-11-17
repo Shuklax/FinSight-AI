@@ -19,8 +19,9 @@ class VectorStore:
         self.texts: List[str] = []  # Store original texts
         self.index_path = os.getenv("FAISS_INDEX_PATH", "./data/faiss_index")
         
-        # Create directory if doesn't exist
-        os.makedirs(self.index_path, exist_ok=True)
+        # Create directory if doesn't exist (Windows-safe)
+        if not os.path.exists(self.index_path):
+            os.makedirs(self.index_path)
     
     def add_vectors(self, embeddings: List[List[float]], texts: List[str]):
         """
