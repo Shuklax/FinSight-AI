@@ -1,54 +1,95 @@
-import { useState } from "react";
+//import { useState } from "react";
+import AnalysisConfig from "./components/AnalysisConfig";
 import LeftNav from "./components/layout/LeftNav";
 import TopBar from "./components/layout/TopBar";
+import ProTips from "./components/ProTips";
+import RecentAnalysis from "./components/RecentAnalysis";
+import SourceMaterial from "./components/SourceMaterial";
 
-interface AnalysisResult {
-  summary: string;
-  sentiment: "positive" | "negative" | "neutral" | string;
-  risk_factors?: string[];
-  opportunities?: string[];
-  key_metrics?: Record<string, string>;
-  confidence_score?: number;
-  sources_used?: number;
-}
+// interface AnalysisResult {
+//   summary: string;
+//   sentiment: "positive" | "negative" | "neutral" | string;
+//   risk_factors?: string[];
+//   opportunities?: string[];
+//   key_metrics?: Record<string, string>;
+//   confidence_score?: number;
+//   sources_used?: number;
+// }
 
 function App() {
-  const [result, setResult] = useState<AnalysisResult | null>(null);
-  const [input, setInput] = useState({
-    type: "",
-    url: "",
-    query: "",
-  });
+  // const [result, setResult] = useState<AnalysisResult | null>(null);
+  // const [input, setInput] = useState({
+  //   type: "",
+  //   url: "",
+  //   query: "",
+  // });
 
-  async function handleAnalyze() {
-    try {
-      const response = await fetch("http://localhost:8000/api/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          type: input.type,
-          input: input.url,
-          query: input.query || undefined,
-        }),
-      });
+  // async function handleAnalyze() {
+  //   try {
+  //     const response = await fetch("http://localhost:8000/api/analyze", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         type: input.type,
+  //         input: input.url,
+  //         query: input.query || undefined,
+  //       }),
+  //     });
 
-      if (!response.ok) {
-        throw new Error(await response.text());
-      }
+  //     if (!response.ok) {
+  //       throw new Error(await response.text());
+  //     }
 
-      const data = await response.json();
-      setResult(data);
-    } catch (error) {
-      console.error("Failed to analyze documents", error);
-    }
-  }
+  //     const data = await response.json();
+  //     setResult(data);
+  //   } catch (error) {
+  //     console.error("Failed to analyze documents", error);
+  //   }
+  // }
 
   return (
-    <div className="flex items-start">
+    <div className="h-screen flex overflow-hidden">
       <LeftNav />
 
-      <div className="flex flex-col lg:w-4/5 md:w-3/4 sm:w-2/3">
+      <div className="flex flex-col flex-1 lg:w-4/5 md:w-3/4 sm:w-2/3">
         <TopBar />
+
+        <div id="body" className="flex-1 overflow-auto">
+          <div className="grid grid-cols-7 grid-rows-10 gap-7 p-10">
+            <div className="col-span-7 rows-span-1">
+              <h1 className="text-3xl font-bold mb-2">Analyze Document</h1>
+              <p className="text-gray-500">
+                Upload financial reports or paste text to generate AI-powered
+                insights, risk assessments, and key metrics.
+              </p>
+            </div>
+
+            <div
+              id="source-material"
+              className="col-start-1 col-span-5 row-span-5 p-5 shadow-xl rounded-2xl border border-gray-400"
+            >
+              <SourceMaterial />
+            </div>
+            <div
+              id="pro-tips"
+              className="bg-[#101828] col-start-6 col-span-2 row-start-2 row-span-4 p-6 shadow-xl rounded-2xl"
+            >
+              <ProTips />
+            </div>
+            <div
+              id="analysis-config"
+              className="shadow-xl rounded-2xl col-start-1 col-span-5 row-span-4 p-5 border border-gray-400"
+            >
+              <AnalysisConfig />
+            </div>
+            <div
+              id="recent-analysis"
+              className="shadow-xl rounded-2xl col-start-6 col-span-2 row-start-6 row-span-5 p-5 border border-gray-400"
+            >
+              <RecentAnalysis />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -15,10 +15,11 @@ const TopBar = () => {
         </div>
         <div className="ml-4 pl-3">
           <InputGroup>
-            <InputGroupInput placeholder="Search reports, tickers or analysis..." />
             <InputGroupAddon>
               <SearchIcon />
             </InputGroupAddon>
+            <InputGroupInput placeholder="Search reports, tickers or analysis..." />
+            
             <InputGroupAddon align="inline-end">
               <InputGroupButton>Search</InputGroupButton>
             </InputGroupAddon>
