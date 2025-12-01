@@ -1,4 +1,4 @@
-# FinOps AI
+# FinSight AI
 
 ChatGPT for Finance, but with real documents + structured insights.
 
