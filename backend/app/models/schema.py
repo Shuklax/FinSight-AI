@@ -66,18 +66,20 @@ class KeyMetrics(BaseModel):
     Additional metrics can be added over time.
     """
 
-    revenue: MetricDetail = Field(default_factory=MetricDetail)
-    eps: MetricDetail = Field(default_factory=MetricDetail)
-    op_margin: MetricDetail = Field(default_factory=MetricDetail, alias="op_margin")
-    free_cash_flow: MetricDetail = Field(
+    revenue: Optional[MetricDetail] = Field(default_factory=MetricDetail)
+    eps: Optional[MetricDetail] = Field(default_factory=MetricDetail)
+    op_margin: Optional[MetricDetail] = Field(
+        default_factory=MetricDetail, alias="op_margin"
+    )
+    free_cash_flow: Optional[MetricDetail] = Field(
         default_factory=MetricDetail, alias="free_cash_flow"
     )
 
     # Backwards-compatible placeholders for other commonly used metrics
-    profit: MetricDetail = Field(default_factory=MetricDetail)
-    guidance: MetricDetail = Field(default_factory=MetricDetail)
-    debt: MetricDetail = Field(default_factory=MetricDetail)
-    cash_flow: MetricDetail = Field(default_factory=MetricDetail)
+    profit: Optional[MetricDetail] = Field(default_factory=MetricDetail)
+    guidance: Optional[MetricDetail] = Field(default_factory=MetricDetail)
+    debt: Optional[MetricDetail] = Field(default_factory=MetricDetail)
+    cash_flow: Optional[MetricDetail] = Field(default_factory=MetricDetail)
 
     class Config:
         allow_population_by_field_name = True
