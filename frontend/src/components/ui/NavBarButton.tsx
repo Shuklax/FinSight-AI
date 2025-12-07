@@ -1,7 +1,7 @@
 import type { LucideProps } from 'lucide-react';
 
 type NavBarButtonProps = {
-  icon?: (props: LucideProps) => JSX.Element;
+  icon?: (props: LucideProps) => any; //JSX.Element
   text: string;
   onClick?: () => void;
 };

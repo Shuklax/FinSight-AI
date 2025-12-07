@@ -1,15 +1,17 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 export class ApiError extends Error {
-  constructor(
-    message: string,
-    status?: number,
-    response?: any
-  ) {
-    super(message);
-    this.name = "ApiError";
+    status?: number;
+    response?: any;
+  
+    constructor(message: string, status?: number, response?: any) {
+      super(message);
+      this.name = "ApiError";
+      this.status = status;
+      this.response = response;
+    }
   }
-}
+  
 
 export async function fetchJson<T>(
   endpoint: string,
