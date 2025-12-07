@@ -1,5 +1,6 @@
 import requests
 import io
+import base64
 from typing import Optional
 from bs4 import BeautifulSoup
 import pdfplumber
@@ -25,7 +26,12 @@ class TextExtractor:
         elif input_type == "url":
             return TextExtractor._extract_from_url(input_data)
         elif input_type == "pdf":
-            return TextExtractor._extract_from_pdf_url(input_data)
+            # Check if input_data is base64 or a URL
+            if input_data.startswith("http://") or input_data.startswith("https://"):
+                return TextExtractor._extract_from_pdf_url(input_data)
+            else:
+                # Assume it's base64 encoded
+                return TextExtractor._extract_from_pdf_base64(input_data)
         else:
             raise ValueError(f"Unsupported input type: {input_type}")
     
@@ -98,6 +104,46 @@ class TextExtractor:
             
         except Exception as e:
             raise Exception(f"Failed to extract from PDF: {str(e)}")
+    
+    @staticmethod
+    def _extract_from_pdf_base64(base64_data: str) -> str:
+        """Extract text from base64-encoded PDF"""
+        try:
+            # Decode base64 to bytes
+            pdf_bytes = base64.b64decode(base64_data)
+            pdf_file = io.BytesIO(pdf_bytes)
+            
+            # Try pdfplumber first (better for tables)
+            try:
+                text_parts = []
+                with pdfplumber.open(pdf_file) as pdf:
+                    for page in pdf.pages:
+                        page_text = page.extract_text()
+                        if page_text:
+                            text_parts.append(page_text)
+                
+                if text_parts:
+                    return "\n\n".join(text_parts)
+            except:
+                pass
+            
+            # Fallback to PyPDF2
+            pdf_file.seek(0)
+            reader = PdfReader(pdf_file)
+            text_parts = []
+            
+            for page in reader.pages:
+                text = page.extract_text()
+                if text:
+                    text_parts.append(text)
+            
+            if not text_parts:
+                raise Exception("No text could be extracted from PDF")
+            
+            return "\n\n".join(text_parts)
+            
+        except Exception as e:
+            raise Exception(f"Failed to extract from base64 PDF: {str(e)}")
     
     @staticmethod
     def clean_text(text: str) -> str:

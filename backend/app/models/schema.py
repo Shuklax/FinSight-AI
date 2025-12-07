@@ -4,6 +4,29 @@ from typing import List, Dict, Optional, Literal
 class AnalyzeRequest(BaseModel):
     type: Literal["pdf", "url", "text"] = Field(..., description="Input type")
     input: str = Field(..., description="PDF URL, web URL, or plain text")
+
+    analysis_type: Literal[
+        "comprehensive-review",
+        "executive-summary", 
+        "risk-assessment",
+        "financial-metrics"
+    ] = Field(
+        "comprehensive-review",
+        alias="analysis-type",  # This maps JSON "analysis-type" to Python analysis_type
+        description="Type of analysis to perform"
+    )
+    
+    focus_area: Literal[
+        "general-overview",
+        "risk-&-revenue",
+        "profitability-&-margins",
+        "debt-&-liquidity"
+    ] = Field(
+        "general-overview",
+        alias="focus-area",  # This maps JSON "focus-area" to Python focus_area
+        description="Area of focus for the analysis"
+    )
+
     query: Optional[str] = Field(
         "Analyze this financial document and extract key insights",
         description="Optional custom query"

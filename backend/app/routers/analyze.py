@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException  # pyright: ignore[reportMissingImports]
 from app.models.schema import AnalyzeRequest, AnalyzeResponse, HealthResponse
 from app.services.rag import RAGPipeline
 

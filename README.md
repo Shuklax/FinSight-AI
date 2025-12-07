@@ -1,10 +1,10 @@
-# AI-Financial-Research-Agent
+# FinSight AI
 
 ChatGPT for Finance, but with real documents + structured insights.
 
 ## Overview
 
-AI Financial Research Agent is an end-to-end system that analyzes financial reports, earnings PDFs, and news articles, and produces structured insights using a Retrieval-Augmented Generation (RAG) pipeline.
+FinOps AI is an end-to-end system that analyzes financial reports, earnings PDFs, and news articles, and produces structured insights using a Retrieval-Augmented Generation (RAG) pipeline.
 
 It extracts text → embeds it → stores vectors in FAISS → retrieves relevant chunks → feeds them into an LLM → outputs risk summaries, sentiment, key metrics, and actionable insights.
 
@@ -49,23 +49,33 @@ Analyzes a financial document or URL.
 **Request:**
 ```json
 {
-    "type": "pdf/url/text",
-    "input": "http://newslink.com/article123",
-    "query": "summarize risks and metrics"
+  "type": "pdf",
+  "input": "http://newslink.com/article123",
+  "analysis-type": "comprehensive-review",
+  "focus-area": "risk-&-revenue",
+  "query": "summarize risks and metrics"
 }
 ```
 
-**Response:**
+**Response (simplified):**
 ```json
 {
-  "summary": "...",
+  "summary": [
+    "Bullet point 1",
+    "Bullet point 2",
+    "Bullet point 3"
+  ],
   "sentiment": "neutral",
-  "risk_factors": [...],
-  "opportunities": [...],
+  "risk_factors": ["..."],
+  "opportunities": ["..."],
   "key_metrics": {
-    "revenue": "...",
-    "profit": "...",
-    "guidance": "..."
-  }
+    "revenue": { "value": "$4.2B", "change": "15%", "direction": "up" },
+    "eps": { "value": "$1.24", "change": "8%", "direction": "up" },
+    "op_margin": { "value": "22.5%", "change": "1.2%", "direction": "down" },
+    "free_cash_flow": { "value": "$850M", "change": null, "direction": "unknown" }
+  },
+  "confidence_score": 87.5,
+  "sources_used": 5,
+  "citations_used": 3
 }
 ```
