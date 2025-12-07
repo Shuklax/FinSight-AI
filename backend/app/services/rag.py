@@ -75,7 +75,12 @@ class RAGPipeline:
         
         # Step 6: LLM Analysis
         print(f" Analyzing with LLM...")
-        response = self.analyzer.analyze(context_chunks, request.query)
+        response = self.analyzer.analyze(
+            context_chunks=context_chunks,
+            query=request.query,
+            analysis_type=request.analysis_type,
+            focus_area=request.focus_area,
+        )
         
         print(f" Analysis complete!")
         return response
