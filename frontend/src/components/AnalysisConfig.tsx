@@ -13,6 +13,7 @@ import { useSourceMaterialStore } from "../store/store";
 import { useState } from "react";
 import { Spinner } from "./ui/spinner";
 import { runAnalysis } from "../services/analysisService";
+import { cn } from "../lib/utils";
 
 const AnalysisConfig = () => {
   const {
@@ -128,11 +129,14 @@ const AnalysisConfig = () => {
         <button
           onClick={handleGenerateAnalysis}
           disabled={isLoading}
-          className="bg-black text-white rounded-xl font-semibold py-2 px-4 w-3/7 hover:bg-slate-800"
+          className={cn(
+            "bg-black text-white rounded-xl font-semibold py-2 px-4 w-3/7",
+            isLoading ? "bg-slate-800 cursor-not-allowed" : "hover:bg-slate-800"
+          )}
         >
           {isLoading ? (
             <>
-              <Spinner className="inline mr-2 mb-1"/>
+              <Spinner className="inline mr-2 mb-1" />
               Analyzing...
             </>
           ) : (

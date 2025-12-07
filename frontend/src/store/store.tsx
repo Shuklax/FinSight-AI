@@ -44,14 +44,14 @@ type KeyMetrics = {
 };
 
 type ResultStore = {
-  summary: string;
+  summary: string[];
   sentiment: string;
   riskFactors: string[];
   opportunities: string[];
   keyMetrics: KeyMetrics;
   confidenceScore: number;
   sourcesUsed: number;
-  setSummary: (summary: string) => void;
+  setSummary: (summary: string[]) => void;
   setSentiment: (sentiment: string) => void;
   setRiskFactors: (riskFactors: string[]) => void;
   setOpportunities: (opportunities: string[]) => void;
@@ -61,7 +61,7 @@ type ResultStore = {
 };
 
 export const useResultStore = create<ResultStore>((set) => ({
-  summary: "",
+  summary: [],
   sentiment: "",
   riskFactors: [],
   opportunities: [],

@@ -39,7 +39,7 @@ class LLMAnalyzer:
 Your response MUST be a valid JSON object with this exact structure:
 {
   "summary": "Brief executive summary (2-3 sentences)",
-  "sentiment": "positive/negative/neutral/mixed",
+  "sentiment": "Positive/Negative/Neutral/Mixed",
   "risk_factors": ["risk 1", "risk 2", ...],
   "opportunities": ["opportunity 1", "opportunity 2", ...],
   "key_metrics": {
@@ -86,7 +86,7 @@ Analyze the above and respond with a JSON object following the required structur
             # Convert to Pydantic model
             return AnalyzeResponse(
                 summary=result_json.get("summary", "Analysis completed"),
-                sentiment=result_json.get("sentiment", "neutral"),
+                sentiment=result_json.get("sentiment", "Neutral"),
                 risk_factors=result_json.get("risk_factors", []),
                 opportunities=result_json.get("opportunities", []),
                 key_metrics=KeyMetrics(**result_json.get("key_metrics", {})),
@@ -98,7 +98,7 @@ Analyze the above and respond with a JSON object following the required structur
             # Fallback response if JSON parsing fails
             return AnalyzeResponse(
                 summary="Analysis completed but structured output failed",
-                sentiment="neutral",
+                sentiment="Neutral",
                 risk_factors=["Unable to extract structured insights"],
                 opportunities=[],
                 key_metrics=KeyMetrics(),

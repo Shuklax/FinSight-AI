@@ -42,7 +42,7 @@ class KeyMetrics(BaseModel):
 
 class AnalyzeResponse(BaseModel):
     summary: str = Field(..., description="Executive summary")
-    sentiment: Literal["positive", "negative", "neutral", "mixed"] = Field(
+    sentiment: Literal["Positive", "Negative", "Neutral", "Mixed"] = Field(
         ..., description="Overall sentiment"
     )
     risk_factors: List[str] = Field(default_factory=list, description="Identified risks")

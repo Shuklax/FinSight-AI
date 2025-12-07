@@ -1,6 +1,9 @@
 import { DollarSign } from 'lucide-react';
+import { useResultStore } from '../store/store';
 
 const GrowthOpportunities = () => {
+  const {opportunities} = useResultStore();
+  console.log(opportunities)
   return (
     <>
       <h1 className="font-semibold text-lg">
@@ -9,18 +12,15 @@ const GrowthOpportunities = () => {
       </h1>
       <div className="m-4">
         <ul className="marker:text-yellow-500 list-disc text-gray-500 space-y-2">
-          <li>
-            Expansion of AI-driven service tier showing 40% QoQ adoption rate among enterprise clients.
-
-
-          </li>
-          <li>
-            Regulatory scrutiny regarding the pending acquisition could delay
-            closing beyond expected timeframe.
-          </li>
-          <li>
-            Untapped market potential in Latin America region with new localized product launch.
-          </li>
+          {opportunities.flatMap((paragraph, pIndex) =>
+          paragraph
+            .split(".")
+            .map((sentence) => sentence.trim())
+            .filter(Boolean) // remove empty strings
+            .map((sentence, sIndex) => (
+              <li key={`${pIndex}-${sIndex}`}>{sentence}.</li>
+            ))
+        )}
         </ul>
       </div>
     </>

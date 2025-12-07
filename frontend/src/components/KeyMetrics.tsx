@@ -1,44 +1,43 @@
-import { TrendingUp, TrendingDown } from "lucide-react";
+import { useResultStore } from "../store/store";
+import MetricRow from "./MetricRow";
+
+const METRIC_CONFIG = [
+  { key: "revenue", label: "Revenue" },
+  { key: "eps", label: "EPS" },
+  { key: "op_margin", label: "Op. Margin" },
+  { key: "free_cash_flow", label: "Free Cash Flow" },
+  { key: "profit", label: "Net Profit" },
+  { key: "guidance", label: "Guidance" },
+  { key: "debt", label: "Total Debt" },
+  { key: "cash_flow", label: "Cash Flow" },
+] as const;
 
 const KeyMetrics = () => {
+  const { keyMetrics } = useResultStore();
+
+  // Guard clause if keyMetrics is undefined or empty
+  if (
+    keyMetrics === null ||
+    !keyMetrics ||
+    Object.keys(keyMetrics).length === 0
+  ) {
+    return (
+      <div className="p-5 shadow-xl border border-gray-400 rounded-2xl">
+        <h1 className="font-semibold text-lg">Key Metrics</h1>
+        <p className="text-gray-500 mt-4 text-sm">No metrics available.</p>
+      </div>
+    );
+  }
+
   return (
     <>
       <h1 className="font-semibold text-lg">Key Metrics</h1>
-
       <div className="mt-4 divide-y">
-        {/* Header not needed, each row is a 3-col grid */}
-        <div className="grid grid-cols-[2fr,1fr,1fr] items-center py-1">
-          <p className="text-sm font-semibold">Revenue</p>
-          <p className="text-sm text-right">$4.2B</p>
-          <p className="text-yellow-600 text-right">
-            <TrendingUp size={18} className="inline mr-0.5" />
-            15%
-          </p>
-        </div>
-
-        <div className="grid grid-cols-[2fr,1fr,1fr] items-center py-1">
-          <p className="text-sm font-semibold">EPS</p>
-          <p className="text-sm text-right">$1.24</p>
-          <p className="text-yellow-600 text-right">
-            <TrendingUp size={18} className="inline mr-0.5" />
-            8%
-          </p>
-        </div>
-
-        <div className="grid grid-cols-[2fr,1fr,1fr] items-center py-1">
-          <p className="text-sm font-semibold">Op. Margin</p>
-          <p className="text-sm text-right">22.5%</p>
-          <p className="text-red-600 text-right">
-            <TrendingDown size={18} className="inline mr-0.5" />
-            1.2%
-          </p>
-        </div>
-
-        <div className="grid grid-cols-[2fr,1fr,1fr] items-center py-1">
-          <p className="text-sm font-semibold">Free Cashflow</p>
-          <p className="text-sm text-right">$850M</p>
-          <p className="text-right">-</p>
-        </div>
+        {METRIC_CONFIG.map(({ key, label }) => {
+          const metric = keyMetrics[key];
+          if (!metric) return null;
+          return <MetricRow key={key} label={label} metric={metric} />;
+        })}
       </div>
     </>
   );

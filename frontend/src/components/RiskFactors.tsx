@@ -1,6 +1,9 @@
 import { CircleAlert } from "lucide-react";
+import { useResultStore } from "../store/store";
 
 const RiskFactors = () => {
+  const {riskFactors} = useResultStore();
+  console.log(riskFactors)
   return (
     <>
       <h1 className="font-semibold text-lg">
@@ -9,18 +12,15 @@ const RiskFactors = () => {
       </h1>
       <div className="m-4">
         <ul className="marker:text-yellow-500 list-disc text-gray-500 space-y-2">
-          <li>
-            Supply chain constraints in the semiconductor division may impact Q4
-            delivery timelines.
-          </li>
-          <li>
-            Regulatory scrutiny regarding the pending acquisition could delay
-            closing beyond expected timeframe.
-          </li>
-          <li>
-            Currency fluctuations in APAC region posing 2-3% headwind to
-            revenue.
-          </li>
+          {riskFactors.flatMap((paragraph, pIndex) =>
+          paragraph
+            .split(".")
+            .map((sentence) => sentence.trim())
+            .filter(Boolean) // remove empty strings
+            .map((sentence, sIndex) => (
+              <li key={`${pIndex}-${sIndex}`}>{sentence}.</li>
+            ))
+        )}
         </ul>
       </div>
     </>
