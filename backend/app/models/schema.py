@@ -8,26 +8,26 @@ class AnalyzeRequest(BaseModel):
     type: Literal["pdf", "url", "text"] = Field(..., description="Input type")
     input: str = Field(..., description="PDF URL, web URL, or plain text")
 
-    # New knobs coming from the UI
     analysis_type: Literal[
         "comprehensive-review",
-        "executive-summary",
+        "executive-summary", 
         "risk-assessment",
-        "financial-metrics",
+        "financial-metrics"
     ] = Field(
         "comprehensive-review",
-        alias="analysis-type",
-        description="High-level analysis style",
+        alias="analysis-type",  # This maps JSON "analysis-type" to Python analysis_type
+        description="Type of analysis to perform"
     )
+    
     focus_area: Literal[
         "general-overview",
         "risk-&-revenue",
         "profitability-&-margins",
-        "debt-&-liquidity",
+        "debt-&-liquidity"
     ] = Field(
         "general-overview",
-        alias="focus-area",
-        description="Primary financial focus area",
+        alias="focus-area",  # This maps JSON "focus-area" to Python focus_area
+        description="Area of focus for the analysis"
     )
 
     query: Optional[str] = Field(

@@ -9,8 +9,40 @@ import {
   SelectValue,
 } from "./ui/select";
 import { Activity } from "lucide-react";
+import { useSourceMaterialStore } from "../store/store";
+import { useState } from "react";
+import { Spinner } from "./ui/spinner";
+import { runAnalysis } from "../services/analysisService";
 
 const AnalysisConfig = () => {
+  const {
+    analysisType,
+    setAnalysisType,
+    focusArea,
+    setFocusArea,
+    specificQuestion,
+    setSpecificQuestion,
+  } = useSourceMaterialStore();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleGenerateAnalysis = async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      await runAnalysis();
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to generate analysis";
+      setError(errorMessage);
+      console.error("analysis error: ", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col border-b-2">
@@ -18,7 +50,11 @@ const AnalysisConfig = () => {
         <div className="flex justify-between mb-6">
           <div>
             <p className="font-semibold mb-2">Analysis Type</p>
-            <Select defaultValue="comprehensive-review">
+            <Select
+              defaultValue="comprehensive-review"
+              value={analysisType}
+              onValueChange={setAnalysisType}
+            >
               <SelectTrigger className="w-[190px]">
                 <SelectValue placeholder="Comprehensive Review" />
               </SelectTrigger>
@@ -42,7 +78,11 @@ const AnalysisConfig = () => {
           </div>
           <div className="mr-32">
             <p className="font-semibold mb-2">Focus Area</p>
-            <Select defaultValue="general-overview">
+            <Select
+              defaultValue="general-overview"
+              value={focusArea}
+              onValueChange={setFocusArea}
+            >
               <SelectTrigger className="w-[190px]">
                 <SelectValue placeholder="General Overview" />
               </SelectTrigger>
@@ -71,15 +111,36 @@ const AnalysisConfig = () => {
           <Input
             type="text"
             id="specific-question"
+            value={specificQuestion}
             placeholder="e.g. What are the primary headwinds mentioned for Q4"
+            onChange={(e) => setSpecificQuestion(e.target.value)}
           />
         </div>
       </div>
 
+      {error && (
+        <div className="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+          {error}
+        </div>
+      )}
+
       <div className="flex flex-row-reverse mt-6 mr-4">
-        <button className="bg-black text-white rounded-xl font-semibold py-2 px-4 w-3/7 hover:bg-slate-800">
-          <Activity className="inline mr-2" size={18} />
-          Generate Analysis
+        <button
+          onClick={handleGenerateAnalysis}
+          disabled={isLoading}
+          className="bg-black text-white rounded-xl font-semibold py-2 px-4 w-3/7 hover:bg-slate-800"
+        >
+          {isLoading ? (
+            <>
+              <Spinner className="inline mr-2 mb-1"/>
+              Analyzing...
+            </>
+          ) : (
+            <>
+              <Activity className="inline mr-2" size={18} />
+              Generate Analysis
+            </>
+          )}
         </button>
       </div>
     </>
